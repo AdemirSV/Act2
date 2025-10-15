@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -56,6 +57,30 @@ public class InventarioController {
 		}
 		flash.addFlashAttribute("toast",Alert.sweetToast(response.mensaje,"success",5000));		
 		return "redirect:/inventario/listado";
+	}
+	
+	//COMMIT CRUD COMPLETO
+	@GetMapping("edicion/{id}")
+	public String edicion(@PathVariable Integer id, Model model) {
+		model.addAttribute("lstProducto",proServ.getAll());
+		model.addAttribute("lstInventario",invServ.getAll());
+		model.addAttribute("inventario",invServ.getOne(id));
+		return "inventario/edicion";
+	}
+	
+	@PostMapping("guardar")
+	public String guardar(@ModelAttribute Inventario inventario, Model model, RedirectAttributes flash) {
+		var response = invServ.update(inventario);
+		
+		if(!response.success) {
+			model.addAttribute("alert",Alert.sweetAlertError(response.mensaje));
+			model.addAttribute("lstInventario",invServ.getAll());
+			model.addAttribute("lstProducto",proServ.getAll());
+			return "inventario/nuevo";
+		}
+		flash.addFlashAttribute("toast",Alert.sweetToast(response.mensaje,"success",5000));		
+		return "redirect:/inventario/listado";
+		
 	}
 
 }

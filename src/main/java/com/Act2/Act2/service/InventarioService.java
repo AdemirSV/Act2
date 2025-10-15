@@ -38,4 +38,20 @@ public class InventarioService {
 		}
 	}
 	
+	//COMMIT CRUD COMPLETO
+	public Inventario getOne(Integer id) {
+		return inventarioRepository.findById(id).orElseThrow();
+	}
+	
+	public ResultadoResponse update(Inventario inventario) {
+		try {
+			Inventario inventarioRegistrado = inventarioRepository.save(inventario);
+			
+			String mensaje = String.format("Producto actualizado con ID %s",inventarioRegistrado.getNumero());
+			return new ResultadoResponse(true,mensaje);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultadoResponse(false, "Error en InventarioService: "+e.getMessage());
+		}
+	}
 }

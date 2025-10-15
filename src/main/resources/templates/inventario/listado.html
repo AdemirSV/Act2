@@ -52,7 +52,7 @@
 							<td th:text="${item.lote}"></td>
 							<td th:text="${item.textoEstado}"></td>
 							<td class="text-center align-middle">
-								<a href="#"
+								<a th:href="@{/inventario/edicion/{id}(id=${item.numero})}"
 									class="btn btn-outline-secondary" title="Editar" role="button">
 									<i class="fa-regular fa-pen-to-square"></i>
 								</a>
