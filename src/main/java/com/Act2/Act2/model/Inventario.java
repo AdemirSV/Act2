@@ -3,6 +3,7 @@ package com.Act2.Act2.model;
 import java.time.LocalDate;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Inventario {
 	private Integer numero;
 	
 	@Column(name="fecha_vencimiento")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fV;
 	
 	@ManyToOne

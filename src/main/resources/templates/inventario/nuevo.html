@@ -17,37 +17,38 @@
 				<h1 class="card-title text-center">Inventario Nuevo</h1>
 				<div class="row d-flex justify-content-center">
 					<div class="col-md-6">
-						<form novalidate method="post">
+						<form method="post" novalidate th:object="${inventario}" th:action="@{/inventario/registrar}">
 							<div class="row">
 								<div class="mb-3 col-md-6">
 									<label for="fechaVencimiento">Fecha de vencimiento</label>
-									<input type="date" class="form-control" required>
+									<input type="date" class="form-control" required th:field="*{fV}">
 								</div>
 								<div class="mb-3 col-md-6">
 									<label for="producto">Producto</label>
-									<select class="form-select" required>
+									<select class="form-select" required th:field="*{producto}">
 										<option value="">--Seleccione--</option>
+										<option th:each="item: ${lstProducto}" th:value="${item.idProducto}" th:text="${item.nombre}"></option>
 									</select>
 								</div>
 							</div>
 							<div class="row">
 								<div class="mb-3 col-md-6">
 									<label for="costoIngreso">Costo de ingreso</label>
-									<input type="number" class="form-control" step="0.01" placeholder="0.00" required>
+									<input type="number" th:field="*{costoIngreso}" class="form-control" step="0.01" placeholder="0.00" required>
 								</div>
 								<div class="mb-3 col-md-6">
 									<label for="cantidad">Cantidad</label>
-									<input type="number" class="form-control" placeholder="0" required>
+									<input type="number" th:field="*{cantidad}" class="form-control" placeholder="0" required>
 								</div>
 							</div>
 							<div class="row">
 								<div class="mb-3 col-md-6">
 									<label for="lote">Lote</label>
-									<input type="text" class="form-control" placeholder="Ingrese un lote" required>
+									<input type="text" th:field="*{lote}" class="form-control" placeholder="Ingrese un lote" required>
 								</div>
 								<div class="mb-3 col-md-6">
 									<label for="codEstado">Estado</label>
-									<select class="form-select" required>
+									<select class="form-select" required th:field="*{codEstado}">
 										<option value="">--Seleccione--</option>
 										<option value="A">Activo</option>
 										<option value="V">Vencido</option>
@@ -58,7 +59,7 @@
 							</div>
 							<div class="col-md-12 d-flex justify-content-between">
 								<!-- Botón Regresar -->
-								<a href="#" class="btn btn-outline-dark">
+								<a th:href="@{/inventario/listado}" class="btn btn-outline-dark">
 									<i class="fa-solid fa-reply"></i> Regresar
 								</a>
 								<!-- Botón Registrar -->
